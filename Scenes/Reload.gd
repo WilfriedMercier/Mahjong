@@ -15,10 +15,12 @@ onready var size_init   = self.get_size()
 
 func _init():
 	
+	var _error
+	
 	self.set_normal_texture(icon)
 	self.set_scale(scale)
-	self.connect('button_down', self, '_on_pressed')
-	self.connect('button_up',   self, '_on_release')
+	_error = self.connect('button_down', self, '_on_pressed')
+	_error = self.connect('button_up',   self, '_on_release')
 
 func _on_pressed():
 	
