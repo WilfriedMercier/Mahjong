@@ -14,6 +14,10 @@ config/name="Mahjong"
 run/main_scene="res://Scenes/Main.tscn"
 config/icon="res://Assets/b1.png"
 
+[autoload]
+
+BackgroundMusic="*res://Scenes/Background music.tscn"
+
 [display]
 
 window/size/width=2560
