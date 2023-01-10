@@ -1,29 +1,30 @@
 extends AnimatedSprite
 
-var animated_frames = preload("res://Scenes/animation.tres")
-
-func _init(x: float, y: float):
-	
-	self.position.x = 10
-	self.position.y = 10
+onready var main   = get_node('/root/Main')
+onready var parent = get_parent()
 
 func _ready():
 	
-	self.z_index    = 101
-	#self.stop()
+	#self.play_animation()
+	self.z_index    = 100
 	
-	self.set_sprite_frames(animated_frames)
-	self.play()
+	self.position.x = parent.dx
+	self.position.y = parent.dy
 	
 	# Connect to end signal
-	var _error = connect('animation_finished', self, '_on_finish')
+	var _error      = connect('animation_finished', self, '_on_finish')
 
 func play_animation():
 	
-	print('enter ', self.get_sprite_frames(), ' ', self.position.x, ' ', self.position.y)
+	parent.set_normal_texture(null)
+	parent.set_pressed_texture(null)
 	self.set_frame(0)
 	self.play()
 
-func on_finish():
-	print('finish')
+func _on_finish():
+	
 	self.stop()
+	main.remove_tile(parent.id)
+	main.selected_tile = ''
+	main.selected_obj  = null
+	main.selected_id   = ''

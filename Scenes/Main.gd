@@ -140,6 +140,12 @@ func make_tile(position: Array):
 	tile_names.remove(index)
 	
 	return load("res://Scenes/Tile.gd").new(position, textures[tile_name], tile_name)
+	
+func remove_tile(id: String):
+	
+	self.remove_child(self.sprites[id])
+	self.sprites[id] = null
+	self.selectable_tiles.erase(id)
 			
 func is_top_free(position: Array):
 	
@@ -264,5 +270,4 @@ func _process(delta):
 		var timer_int: int = int(timer)
 		var seconds: int   = timer_int % 60
 		var minutes: int   = (timer_int - seconds)/60
-#		print(seconds, ' ', minutes)
 		clock_label.set_text('%02d:%02d' %[minutes, seconds])
