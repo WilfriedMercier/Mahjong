@@ -3,12 +3,6 @@ extends TextureButton
 # Main script to update variables
 onready var main_script      = get_node('/root/Main')
 
-# Score label
-onready var score_label      = get_node('/root/Main/Score')
-
-# Possibility label
-onready var p_label          = get_node('/root/Main/Possibility_label')
-
 # Swoosh sound player
 onready var swoosh_sound     = get_node("/root/Main/button/Swoosh_sound")
 
@@ -82,51 +76,15 @@ func _on_pressed():
 			# Initialise interpolation variable
 			interp_scale = scale_sprite
 			
-#			# Update the scale and position of the tile to show it is selected
-#			self.set_scale(scale_sprite2)
-#			self.set_position(self.get_begin() + Vector2(offset_x, offset_y))
-			
 			# Case if the pressed tile is the same as the previously pressed tile
 			if main_script.selected_tile == tile_name:
 				
-				# Remove tiles from sprites Array in main script so that we know they are inactive
-#				main_script.sprites[id]                          = null
-#				main_script.sprites[main_script.selected_obj.id] = null
-				
-				# Remove the two IDs from the selectable Array
-#				main_script.selectable_tiles.erase(id)
-#				main_script.selectable_tiles.erase(main_script.selected_id)
-				
-				# Add potentially two new IDs into the selectable Array
-				main_script.add_selectable(id, [layer, position_x, position_y])
-				main_script.add_selectable(main_script.selected_id, 
-										   [main_script.selected_obj.layer,
-											main_script.selected_obj.position_x, 
-											main_script.selected_obj.position_y]
-										  )
-										
 				# Play sound
 				swoosh_sound.play()
 				
 				# Show the animation once (the destruction of the tile is called at the end)
 				animation_obj.play_animation()
 				main_script.selected_obj.animation_obj.play_animation()
-										
-				# Remove tiles from main scene to hide them
-#				main_script.remove_child(main_script.selected_obj)
-#				main_script.remove_child(self)
-				
-				# Update the variables that are linked to the first selected element
-#				main_script.selected_tile = ''
-#				main_script.selected_obj  = null
-#				main_script.selected_id   = ''
-				
-				# Update the number of validated tiles
-				main_script.count        += 2
-				score_label.set_text('Score: %3d/144' %main_script.count)
-				
-				# Update the number of possible pairs and the label
-				p_label.set_count(main_script.count_pairs())
 				
 			# Case if this is the first pressed tile
 			else:

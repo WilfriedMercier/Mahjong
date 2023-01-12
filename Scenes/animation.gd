@@ -1,7 +1,11 @@
 extends AnimatedSprite
 
-onready var main   = get_node('/root/Main')
-onready var parent = get_parent()
+onready var main        = get_node('/root/Main')
+onready var score_label = get_node('/root/Main/Score')
+onready var p_label     = get_node('/root/Main/Possibility_label')
+onready var parent      = get_parent()
+
+var destroy: bool       = false
 
 func _ready():
 	
@@ -16,15 +20,36 @@ func _ready():
 
 func play_animation():
 	
+	self.destroy = true
+	
+	# Hide texture
 	parent.set_normal_texture(null)
 	parent.set_pressed_texture(null)
+	
+	# Add potentially new IDs into the selectable Array
+	main.add_selectable(parent.id, [parent.layer, parent.position_x, parent.position_y])
+	
+	# Remove the tile from the selectable array
+	main.selectable_tiles.erase(parent.id)
+	
+	# Update the number of validated tiles
+	main.count        += 2
+	score_label.set_text('Score: %3d/144' %main.count)
+	
+	# Update the number of possible pairs and the label
+	p_label.set_count(main.count_pairs())
+	
+	# Play animation from beginning
 	self.set_frame(0)
 	self.play()
 
 func _on_finish():
 	
 	self.stop()
-	main.remove_tile(parent.id)
-	main.selected_tile = ''
-	main.selected_obj  = null
-	main.selected_id   = ''
+	
+	if self.destroy:
+		
+		main.remove_tile(parent.id)
+		main.selected_tile = ''
+		main.selected_obj  = null
+		main.selected_id   = ''

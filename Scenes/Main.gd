@@ -114,15 +114,15 @@ onready var p_label      = get_node("Possibility_label")
 # Game over sprite
 onready var game_over_s  = get_node("Game_over")
 
+# Game over sprite
+onready var help_button  = get_node("Help")
+
 # Timer and clock label
 var timer: float         = 0.0
 onready var clock_label  = get_node("Clock")
 
 func random_int(mini: int, maxi: int):
 	return randi() % (maxi-mini+1) + mini
-	
-func random_tile_name(mini: int, maxi: int):
-	return tile_names[random_int(mini, maxi)]
 	
 func make_tile(position: Array):
 #	Create a tile with a position and a texture
@@ -145,7 +145,6 @@ func remove_tile(id: String):
 	
 	self.remove_child(self.sprites[id])
 	self.sprites[id] = null
-	self.selectable_tiles.erase(id)
 			
 func is_top_free(position: Array):
 	
@@ -155,7 +154,7 @@ func is_top_free(position: Array):
 	new_id  = '%s,%s,%s' %[position[0]+1, position[1], position[2]]
 	if new_id in tiles_ids and sprites[new_id] != null:
 		return false
-	
+		
 	return true
 	
 func count_pairs():
@@ -163,12 +162,12 @@ func count_pairs():
 	var cnt: int          = 0
 	var length: int       = len(selectable_tiles)
 	var index_list: Array = []
-	var name1: String
+	var sprite1
 	
 	for idx1 in range(length-1):
 	
 		# Name of the tile associated to idx1
-		name1     = sprites[selectable_tiles[idx1]].tile_name
+		sprite1 = sprites[selectable_tiles[idx1]]
 		
 		for idx2 in range(idx1+1, length):
 			
@@ -177,12 +176,15 @@ func count_pairs():
 			
 			# If both names are equal, we have found a pair and we stop the search
 			var sprite = sprites[selectable_tiles[idx2]]
-			if sprite == null:
-				print('Null tile ', selectable_tiles[idx2])
 			
-			if name1 == sprite.tile_name:
+			# Checking that we do not have null tiles
+#			if sprite == null:
+#				print('Null tile ', selectable_tiles[idx2])
+			
+			if sprite1.tile_name == sprite.tile_name:
 				cnt += 1
 				index_list.append(idx2)
+				print('\nCounting ', sprite1.tile_name, ' ', sprite.tile_name, ' ', cnt)
 				break
 				
 	# Set game over flag if 0 is reached
@@ -190,6 +192,41 @@ func count_pairs():
 		game_over_flag = true
 				
 	return cnt
+	
+func show_help():
+	
+	var length: int       = len(selectable_tiles)
+	var index_list: Array = []
+	var sprite1
+	
+	print('Selectable tiles: ', length)
+	var _tmp = []
+	for idd in selectable_tiles:
+		_tmp.append(sprites[idd].tile_name)
+	print(_tmp)
+	
+	for idx1 in range(length-1):
+	
+		# Name of the tile associated to idx1
+		sprite1 = sprites[selectable_tiles[idx1]]
+		
+		for idx2 in range(idx1+1, length):
+			
+			if idx1 in index_list:
+				break
+			
+			# If both names are equal, we have found a pair and we stop the search
+			var sprite = sprites[selectable_tiles[idx2]]
+#			if sprite == null:
+#				print('Null tile ', selectable_tiles[idx2])
+			
+			if sprite1.tile_name == sprite.tile_name:
+				sprite1.animation_obj.play()
+				sprite.animation_obj.play()
+				print('\nHelp', sprite1.tile_name, ' ', sprite.tile_name)
+				break
+
+	
 
 func add_selectable(id: String, position: Array):
 	

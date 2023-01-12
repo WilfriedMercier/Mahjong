@@ -1,14 +1,15 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/Main.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Tile.gd" type="Script" id=2]
 [ext_resource path="res://Fonts/dynamic_font.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Scenes/counts.gd" type="Script" id=4]
 [ext_resource path="res://Fonts/dynamic_font_large.tres" type="DynamicFont" id=5]
-[ext_resource path="res://Scenes/Reload.gd" type="Script" id=6]
+[ext_resource path="res://Scenes/Help.gd" type="Script" id=6]
 [ext_resource path="res://Assets/game_over.png" type="Texture" id=7]
 [ext_resource path="res://Scenes/Game_over.gd" type="Script" id=8]
 [ext_resource path="res://Sounds/swoosh.wav" type="AudioStream" id=9]
+[ext_resource path="res://Reload.gd" type="Script" id=10]
 
 [node name="Main" type="Node2D"]
 position = Vector2( 18, 35 )
@@ -62,5 +63,13 @@ margin_left = 2350.0
 margin_top = 150.0
 margin_right = 2350.0
 margin_bottom = 150.0
+flip_h = true
+script = ExtResource( 10 )
+
+[node name="Help" type="TextureButton" parent="."]
+margin_left = 2350.0
+margin_top = 300.0
+margin_right = 2350.0
+margin_bottom = 300.0
 flip_h = true
 script = ExtResource( 6 )
