@@ -18,7 +18,7 @@ func _ready():
 	# Connect to end signal
 	var _error      = connect('animation_finished', self, '_on_finish')
 
-func play_animation():
+func play_animation(game_over_activate: bool = true):
 	
 	self.destroy = true
 	
@@ -33,11 +33,11 @@ func play_animation():
 	main.selectable_tiles.erase(parent.id)
 	
 	# Update the number of validated tiles
-	main.count        += 2
+	main.count        += 1
 	score_label.set_text('Score: %3d/144' %main.count)
 	
 	# Update the number of possible pairs and the label
-	p_label.set_count(main.count_pairs())
+	p_label.set_count(main.count_pairs(game_over_activate))
 	
 	# Play animation from beginning
 	self.set_frame(0)
@@ -53,3 +53,5 @@ func _on_finish():
 		main.selected_tile = ''
 		main.selected_obj  = null
 		main.selected_id   = ''
+		
+		parent.queue_free()

@@ -157,7 +157,7 @@ func is_top_free(position: Array):
 		
 	return true
 	
-func count_pairs():
+func count_pairs(game_over_activate: bool = true):
 	
 	var cnt: int          = 0
 	var length: int       = len(selectable_tiles)
@@ -184,11 +184,10 @@ func count_pairs():
 			if sprite1.tile_name == sprite.tile_name:
 				cnt += 1
 				index_list.append(idx2)
-				print('\nCounting ', sprite1.tile_name, ' ', sprite.tile_name, ' ', cnt)
 				break
 				
 	# Set game over flag if 0 is reached
-	if cnt == 0:
+	if game_over_activate and cnt == 0:
 		game_over_flag = true
 				
 	return cnt
@@ -198,12 +197,6 @@ func show_help():
 	var length: int       = len(selectable_tiles)
 	var index_list: Array = []
 	var sprite1
-	
-	print('Selectable tiles: ', length)
-	var _tmp = []
-	for idd in selectable_tiles:
-		_tmp.append(sprites[idd].tile_name)
-	print(_tmp)
 	
 	for idx1 in range(length-1):
 	
@@ -223,7 +216,6 @@ func show_help():
 			if sprite1.tile_name == sprite.tile_name:
 				sprite1.animation_obj.play()
 				sprite.animation_obj.play()
-				print('\nHelp', sprite1.tile_name, ' ', sprite.tile_name)
 				break
 
 	
@@ -262,21 +254,20 @@ func add_selectable(id: String, position: Array):
 			selectable_tiles.append(new_id)
 			
 		# Check whether the bottom tile is selectable
-		new_pos = [position[0]-1, position[1], position[2]]
-		new_id  = '%s,%s,%s' %new_pos
-		if position[0] != 0 and not (new_id in selectable_tiles):
+		if position[0] != 0 and not ('%s,%s,%s' %[position[0]-1, position[1], position[2]] in selectable_tiles):
+			
+			new_id              = '%s,%s,%s' %[position[0]-1, position[1]-1, position[2]]
+			var new_id2: String = '%s,%s,%s' %[position[0]-1, position[1]+1, position[2]]
 			
 			# First check tile to the left, then tile to the right
-			new_pos = [position[0]-1, position[1]-1, position[2]]
-			new_id  = '%s,%s,%s' %new_pos
 			if not (new_id in tiles_ids) or sprites[new_id] == null:
+				print('Checking below right ', new_id)
 				selectable_tiles.append('%s,%s,%s' %[position[0]-1, position[1], position[2]])
-				return
-			
-			new_pos = [position[0]-1, position[1]+1, position[2]]
-			new_id  = '%s,%s,%s' %new_pos
-			if not (new_id in tiles_ids) or sprites[new_id] == null:
+			elif not (new_id2 in tiles_ids) or sprites[new_id2] == null:
+				print('Checking below left ', new_id2)
 				selectable_tiles.append('%s,%s,%s' %[position[0]-1, position[1], position[2]])
+			else:
+				print('Checked below ', '%s,%s,%s' %[position[0]-1, position[1], position[2]])
 
 func _ready():
 	

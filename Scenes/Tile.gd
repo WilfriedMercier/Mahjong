@@ -70,6 +70,8 @@ func _on_pressed():
 	
 	if is_pressed():
 		
+		print(tile_name, ' ', id, ' ', main_script.selectable_tiles)
+		
 		# Case if the pressed tile is selectable and if it is either the first pressed or the same as the one previously pressed
 		if id in main_script.selectable_tiles and main_script.selected_tile in ['', tile_name]:
 			
@@ -83,7 +85,7 @@ func _on_pressed():
 				swoosh_sound.play()
 				
 				# Show the animation once (the destruction of the tile is called at the end)
-				animation_obj.play_animation()
+				animation_obj.play_animation(false)
 				main_script.selected_obj.animation_obj.play_animation()
 				
 			# Case if this is the first pressed tile
