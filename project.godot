@@ -12,6 +12,7 @@ config_version=4
 
 config/name="Mahjong"
 run/main_scene="res://Scenes/Main.tscn"
+run/low_processor_mode=true
 config/icon="res://Assets/b1.png"
 
 [autoload]
