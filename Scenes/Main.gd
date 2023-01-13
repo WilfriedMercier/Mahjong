@@ -114,12 +114,25 @@ var game_playing_flag: bool = false
 onready var p_label      = get_node("Possibility_label")
 onready var game_over_s  = get_node("Game_over")
 onready var help_button  = get_node("Help")
+onready var pause_button = get_node("Play_pause")
 
 # Timer and clock label
 var timer: float         = 0.0
 onready var clock_label  = get_node("Clock")
 
-func random_int(mini: int, maxi: int):
+func update_sound_effects_volume(value: int) -> void:
+	
+	var new_val: int = value - 10
+	
+	help_button.sound.set_volume_db(new_val)
+	pause_button.sound.set_volume_db(new_val)
+	
+	for tile in sprites.values():
+		if tile != null:
+			tile.swoosh_sound.set_volume_db(new_val)
+	
+
+func random_int(mini: int, maxi: int) -> int:
 	return randi() % (maxi-mini+1) + mini
 	
 func make_tile(position: Array):
@@ -139,12 +152,12 @@ func make_tile(position: Array):
 	
 	return load("res://Scenes/Tile.gd").new(position, textures[tile_name], tile_name)
 	
-func remove_tile(id: String):
+func remove_tile(id: String) -> void:
 	
 	self.remove_child(self.sprites[id])
 	self.sprites[id] = null
 			
-func is_top_free(position: Array):
+func is_top_free(position: Array) -> bool:
 	
 	var new_id: String
 	
@@ -155,7 +168,7 @@ func is_top_free(position: Array):
 		
 	return true
 	
-func count_pairs(game_over_activate: bool = true):
+func count_pairs(game_over_activate: bool = true) -> int:
 	
 	var cnt: int          = 0
 	var length: int       = len(selectable_tiles)
