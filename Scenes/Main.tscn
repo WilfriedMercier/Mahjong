@@ -71,5 +71,4 @@ margin_left = 2350.0
 margin_top = 300.0
 margin_right = 2350.0
 margin_bottom = 300.0
-flip_h = true
 script = ExtResource( 6 )

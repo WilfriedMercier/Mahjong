@@ -103,18 +103,16 @@ var selected_id: String
 var sprites: Dictionary
 
 # Number of validated tiles
-var count: int           = 0
+var count: int              = 0
 
 # Flag for game over
-var game_over_flag: bool = false
+var game_over_flag: bool    = false
 
-# Possibility label
+# Flag to know when the game has started
+var game_started_flag: bool = false
+
 onready var p_label      = get_node("Possibility_label")
-
-# Game over sprite
 onready var game_over_s  = get_node("Game_over")
-
-# Game over sprite
 onready var help_button  = get_node("Help")
 
 # Timer and clock label
@@ -290,10 +288,11 @@ func _ready():
 		
 	p_label.set_count(count_pairs())
 	game_over_s.hide()
+	clock_label.set_text('00:00')
 	
 func _process(delta):
 	
-	if not game_over_flag:
+	if game_started_flag and not game_over_flag:
 		timer += delta
 		var timer_int: int = int(timer)
 		var seconds: int   = timer_int % 60

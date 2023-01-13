@@ -70,8 +70,6 @@ func _on_pressed():
 	
 	if is_pressed():
 		
-		print(tile_name, ' ', id, ' ', main_script.selectable_tiles)
-		
 		# Case if the pressed tile is selectable and if it is either the first pressed or the same as the one previously pressed
 		if id in main_script.selectable_tiles and main_script.selected_tile in ['', tile_name]:
 			
@@ -80,6 +78,9 @@ func _on_pressed():
 			
 			# Case if the pressed tile is the same as the previously pressed tile
 			if main_script.selected_tile == tile_name:
+				
+				# Start the game counter if not already started
+				main_script.game_started_flag = true
 				
 				# Play sound
 				swoosh_sound.play()

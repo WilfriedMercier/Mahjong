@@ -4,11 +4,11 @@ extends TextureButton
 onready var main_script = get_node('/root/Main')
 
 # Reload icon
-var icon                = preload("res://Assets/reload_icon.png")
+var icon                = preload("res://Icons/help.png")
 
 # Various scales
-var scale: Vector2      = Vector2(0.3, 0.3)
-var scale2: Vector2     = Vector2(0.2, 0.2)
+var scale: Vector2      = Vector2(0.6, 0.6)
+var scale2: Vector2     = Vector2(0.4, 0.4)
 
 # Initial size of the button
 onready var size_init   = self.get_size()
