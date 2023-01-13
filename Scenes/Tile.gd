@@ -80,7 +80,7 @@ func _on_pressed():
 			if main_script.selected_tile == tile_name:
 				
 				# Start the game counter if not already started
-				main_script.game_started_flag = true
+				main_script.game_playing_flag = true
 				
 				# Play sound
 				swoosh_sound.play()

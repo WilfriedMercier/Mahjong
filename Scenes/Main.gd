@@ -109,7 +109,7 @@ var count: int              = 0
 var game_over_flag: bool    = false
 
 # Flag to know when the game has started
-var game_started_flag: bool = false
+var game_playing_flag: bool = false
 
 onready var p_label      = get_node("Possibility_label")
 onready var game_over_s  = get_node("Game_over")
@@ -292,7 +292,7 @@ func _ready():
 	
 func _process(delta):
 	
-	if game_started_flag and not game_over_flag:
+	if game_playing_flag and not game_over_flag:
 		timer += delta
 		var timer_int: int = int(timer)
 		var seconds: int   = timer_int % 60

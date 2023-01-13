@@ -1,10 +1,10 @@
 extends TextureButton
 
 # Main script to update variables
-onready var main_script = get_node('/root/Main')
+onready var main        = get_node('/root/Main')
 
-# Reload icon
 var icon                = preload("res://Icons/help.png")
+onready var sound       = get_node("/root/Main/Help/Click_sound")
 
 # Various scales
 var scale: Vector2      = Vector2(0.6, 0.6)
@@ -24,6 +24,8 @@ func _init():
 
 func _on_pressed():
 	
+	sound.play()
+	
 	# Offset to apply for the tile to remain centered
 	var dscale: Vector2 = scale - scale2
 	var offset_x: float = (dscale[0] * self.size_init[0])/2
@@ -31,6 +33,8 @@ func _on_pressed():
 
 	self.set_scale(scale2)
 	self.set_position(self.get_begin() + Vector2(offset_x, offset_y))
+	
+	main.show_help()
 	
 func _on_release():
 	
@@ -41,6 +45,3 @@ func _on_release():
 
 	self.set_scale(scale)
 	self.set_position(self.get_begin() - Vector2(offset_x, offset_y))
-	
-	# Reload main scene
-	main_script.show_help()

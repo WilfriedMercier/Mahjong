@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/Main.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Tile.gd" type="Script" id=2]
@@ -10,6 +10,9 @@
 [ext_resource path="res://Scenes/Game_over.gd" type="Script" id=8]
 [ext_resource path="res://Sounds/swoosh.wav" type="AudioStream" id=9]
 [ext_resource path="res://Reload.gd" type="Script" id=10]
+[ext_resource path="res://Scenes/Play_pause.gd" type="Script" id=11]
+[ext_resource path="res://Sounds/click.wav" type="AudioStream" id=12]
+[ext_resource path="res://Sounds/help.wav" type="AudioStream" id=13]
 
 [node name="Main" type="Node2D"]
 position = Vector2( 18, 35 )
@@ -72,3 +75,18 @@ margin_top = 300.0
 margin_right = 2350.0
 margin_bottom = 300.0
 script = ExtResource( 6 )
+
+[node name="Click_sound" type="AudioStreamPlayer" parent="Help"]
+stream = ExtResource( 13 )
+volume_db = -10.0
+
+[node name="Play_pause" type="TextureButton" parent="."]
+margin_left = 2350.0
+margin_top = 450.0
+margin_right = 2350.0
+margin_bottom = 450.0
+script = ExtResource( 11 )
+
+[node name="Click_sound" type="AudioStreamPlayer" parent="Play_pause"]
+stream = ExtResource( 12 )
+volume_db = -10.0
